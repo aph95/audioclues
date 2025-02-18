@@ -73,21 +73,25 @@
             'audio/clue2.mp3', 
             'audio/clue3.mp3'
         ];
-
+    
         let currentIndex = 0; // Start with the first audio clue
         const statusText = document.getElementById('status');
         const startButton = document.getElementById('startButton');
-
+        let audio = new Audio(); // Use a single Audio object
+    
         // Function to play the next audio clue
         function playNextAudio() {
             if (currentIndex < audioFiles.length) {
-                const audio = new Audio(audioFiles[currentIndex]);
-                audio.play();
-
-                // Update status text
-                statusText.textContent = `Playing clue ${currentIndex + 1} of ${audioFiles.length}`;
-
-                // Move to the next audio after a delay when the current one ends
+                audio.src = audioFiles[currentIndex]; // Set the source of the audio
+                audio.play().then(() => {
+                    // Update status text
+                    statusText.textContent = `Playing clue ${currentIndex + 1} of ${audioFiles.length}`;
+                }).catch(error => {
+                    console.error('Audio playback failed:', error);
+                    statusText.textContent = 'Audio playback failed. Please check your browser settings.';
+                });
+    
+                // Move to the next audio after the current one ends
                 audio.addEventListener('ended', () => {
                     currentIndex++;
                     if (currentIndex < audioFiles.length) {
@@ -95,15 +99,16 @@
                     } else {
                         statusText.textContent = 'All clues have been played!';
                     }
-                });
+                }, { once: true }); // Add listener only once
             }
         }
-
+    
         // Start playing audio on button click
         startButton.addEventListener('click', () => {
             startButton.style.display = 'none'; // Hide the button
             playNextAudio();
         });
     </script>
+    
 </body>
 </html>
