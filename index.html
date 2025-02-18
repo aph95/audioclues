@@ -85,7 +85,7 @@
                 audio.src = audioFiles[currentIndex]; // Set the source of the audio
                 audio.play().then(() => {
                     // Update status text
-                    statusText.textContent = `Playing clue ${currentIndex + 1} of ${audioFiles.length}`;
+                    statusText.textContent = `Spelar ledtråd ${currentIndex + 1} of ${audioFiles.length}`;
                 }).catch(error => {
                     console.error('Audio playback failed:', error);
                     statusText.textContent = 'Audio playback failed. Please check your browser settings.';
