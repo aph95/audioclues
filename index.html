@@ -88,7 +88,7 @@
                     statusText.textContent = `Spelar ledtråd ${currentIndex + 1} of ${audioFiles.length}`;
                 }).catch(error => {
                     console.error('Audio playback failed:', error);
-                    statusText.textContent = 'Audio playback failed. Please check your browser settings.';
+                    statusText.textContent = 'Audio playback misslyckades!';
                 });
     
                 // Move to the next audio after the current one ends
@@ -97,7 +97,7 @@
                     if (currentIndex < audioFiles.length) {
                         setTimeout(playNextAudio, 5000); // 5-second delay
                     } else {
-                        statusText.textContent = 'All clues have been played!';
+                        statusText.textContent = 'Alla ledtrådar har spelats upp!';
                     }
                 }, { once: true }); // Add listener only once
             }
