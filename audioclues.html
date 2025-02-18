@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Burken - Audio Clues</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1e1e2f;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            background: #282846;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Digital Burken - Audio Clues</h1>
+        <p>Audio clues will play automatically to guide the seeker. Make sure your sound is on!</p>
+        <p id="status">Loading audio...</p>
+    </div>
+
+    <script>
+        // Array of audio files (replace with your own MP3 files)
+        const audioFiles = [
+            'audio/clue1.mp3', 
+            'audio/clue2.mp3', 
+            'audio/clue3.mp3'
+        ];
+
+        let currentIndex = 0; // Start with the first audio clue
+        const statusText = document.getElementById('status');
+
+        // Function to play the next audio clue
+        function playNextAudio() {
+            if (currentIndex < audioFiles.length) {
+                const audio = new Audio(audioFiles[currentIndex]);
+                audio.play();
+
+                // Update status text
+                statusText.textContent = `Playing clue ${currentIndex + 1} of ${audioFiles.length}`;
+
+                // Move to the next audio when the current one ends
+                audio.addEventListener('ended', () => {
+                    currentIndex++;
+                    playNextAudio();
+                });
+            } else {
+                statusText.textContent = 'All clues have been played!';
+            }
+        }
+
+        // Start playing audio automatically
+        window.onload = () => {
+            playNextAudio();
+        };
+    </script>
+</body>
+</html>
